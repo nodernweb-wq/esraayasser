@@ -1,0 +1,1 @@
+export default function SecHead({id,label,title,sub}){return(<div className="reveal mb-7"><p className="label mb-2">{label}</p><h2 id={id} className="title">{title}</h2>{sub&&<p className="mt-2 text-sm text-mute md:text-base">{sub}</p>}</div>)}
