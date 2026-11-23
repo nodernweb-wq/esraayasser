@@ -98,8 +98,8 @@ export const ABOUT = {
 
 const FOLDERS = [
   { cat: "Product Reviews", title: "Product Review", tag: "REVIEW", n: 5 },
-  { cat: "Lifestyle", title: "Lifestyle Reel", tag: "LIFESTYLE", n: 2 },
   { cat: "Video Editing", title: "Video Edit", tag: "EDIT", n: 7 },
+  { cat: "Lifestyle", title: "Lifestyle Reel", tag: "LIFESTYLE", n: 2 },
 ];
 const WORK_ITEMS = [];
 for (let i = 1; i <= Math.max(...FOLDERS.map((f) => f.n)); i++)

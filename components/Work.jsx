@@ -1,9 +1,84 @@
-'use client';
-import {useState,useMemo} from 'react';import Icon from './ui/Icon';import VideoCard from './VideoCard';import SecHead from './ui/SecHead';import {WORK as w,SITE} from '@/data/site';
-export default function Work(){const cats=useMemo(()=>[w.all,...new Set(w.items.map(i=>i.cat))],[]);
-const [c,setC]=useState(w.all),[n,setN]=useState(w.pageSize);
-const list=c===w.all?w.items:w.items.filter(i=>i.cat===c),shown=list.slice(0,n),left=list.length-shown.length;
-return(<section id="work" aria-labelledby="work-h" className="mx-auto max-w-6xl px-5 py-14 md:py-20"><SecHead id="work-h" label={w.label} title={w.title} sub={w.sub}/>
-<div role="group" aria-label="Filter videos" className="-mx-5 mb-6 flex gap-2 overflow-x-auto px-5 pb-1 [scrollbar-width:none] md:mx-0 md:px-0">{cats.map(x=><button key={x} type="button" aria-pressed={x===c} onClick={()=>{setC(x);setN(w.pageSize)}} className={`shrink-0 rounded-full border-2 px-4 py-2 text-sm font-bold transition duration-300 ${x===c?'border-brand bg-brand text-white':'border-ink bg-white hover:border-brand hover:text-brand'}`}>{x}</button>)}</div>
-<div key={c} className="tab-in grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-5 lg:grid-cols-4">{shown.map(v=><VideoCard key={v.src} v={v}/>)}</div>
-<div className="mt-9 flex justify-center">{list.length>w.pageSize?<button type="button" aria-expanded={left===0} onClick={()=>left>0?setN(n+w.pageSize):setN(w.pageSize)} className="btn nb !rounded-2xl bg-white text-ink">{left>0?w.more:w.less}<span className="grid h-7 w-7 place-items-center rounded-full bg-brand text-white"><Icon n="down" className={`h-3.5 w-3.5 transition ${left>0?'':'rotate-180'}`}/></span></button>:<a href={SITE.instagram.url} target="_blank" rel="noopener noreferrer me" className="btn nb !rounded-2xl bg-white text-ink">{w.more}<span className="grid h-7 w-7 place-items-center rounded-full bg-brand text-white"><Icon n="out" className="h-3.5 w-3.5"/></span></a>}</div></section>)}
+"use client";
+import { useState, useMemo } from "react";
+import Icon from "./ui/Icon";
+import VideoCard from "./VideoCard";
+import SecHead from "./ui/SecHead";
+import { WORK as w, SITE } from "@/data/site";
+export default function Work() {
+  const cats = useMemo(
+    () => [w.all, ...new Set(w.items.map((i) => i.cat))],
+    [],
+  );
+  const [c, setC] = useState(w.all),
+    [n, setN] = useState(w.pageSize);
+  const list = c === w.all ? w.items : w.items.filter((i) => i.cat === c),
+    shown = list.slice(0, n),
+    left = list.length - shown.length;
+  return (
+    <section
+      id="work"
+      aria-labelledby="work-h"
+      className="mx-auto max-w-6xl px-5 py-14 md:py-20"
+    >
+      <SecHead id="work-h" label={w.label} title={w.title} sub={w.sub} />
+      <div
+        role="group"
+        aria-label="Filter videos"
+        className="-mx-5 mb-6 flex gap-2 overflow-x-auto px-5 pb-1 [scrollbar-width:none] md:mx-0 md:px-0"
+      >
+        {cats.map((x) => (
+          <button
+            key={x}
+            type="button"
+            aria-pressed={x === c}
+            onClick={() => {
+              setC(x);
+              setN(w.pageSize);
+            }}
+            className={`shrink-0 rounded-full border-2 px-4 py-2 text-sm font-bold transition duration-300 ${x === c ? "border-brand bg-brand text-white" : "border-ink bg-white hover:border-brand hover:text-brand"}`}
+          >
+            {x}
+          </button>
+        ))}
+      </div>
+      <div
+        key={c}
+        className="tab-in grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-5 lg:grid-cols-4"
+      >
+        {shown.map((v) => (
+          <VideoCard key={v.src} v={v} />
+        ))}
+      </div>
+      <div className="mt-9 flex justify-center">
+        {list.length > w.pageSize ? (
+          <button
+            type="button"
+            aria-expanded={left === 0}
+            onClick={() => (left > 0 ? setN(n + w.pageSize) : setN(w.pageSize))}
+            className="btn nb !rounded-2xl bg-white text-ink"
+          >
+            {left > 0 ? w.more : w.less}
+            <span className="grid h-7 w-7 place-items-center rounded-full bg-brand text-white">
+              <Icon
+                n="down"
+                className={`h-3.5 w-3.5 transition ${left > 0 ? "" : "rotate-180"}`}
+              />
+            </span>
+          </button>
+        ) : (
+          <a
+            href={SITE.instagram.url}
+            target="_blank"
+            rel="noopener noreferrer me"
+            className="btn nb !rounded-2xl bg-white text-ink"
+          >
+            {w.more}
+            <span className="grid h-7 w-7 place-items-center rounded-full bg-brand text-white">
+              <Icon n="out" className="h-3.5 w-3.5" />
+            </span>
+          </a>
+        )}
+      </div>
+    </section>
+  );
+}
