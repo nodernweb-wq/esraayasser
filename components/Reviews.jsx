@@ -1,12 +1,93 @@
 'use client';
-import {useState,useRef} from 'react';import Img from './ui/Img';import SnapRow from './SnapRow';import SecHead from './ui/SecHead';import {REVIEWS as r} from '@/data/site';
-function Card({t,onShot}){const [open,setOpen]=useState(false),parts=t.bold?t.quote.split(t.bold):[t.quote];
-return(<li className="reveal w-[88%] shrink-0 snap-center sm:w-[46%] lg:w-[calc(33.333%-11px)]"><article className="nb h-full rounded-3xl bg-white p-4">
-<header className="flex items-start gap-3"><span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-[#dff3e4] text-xs font-extrabold text-[#2d8a4e]">{t.initials}</span><div className="min-w-0 flex-1"><b className="block truncate text-sm">{t.name} • {t.brand}</b><span className="text-[11px] text-mute">WhatsApp Business • {t.time}</span></div>{t.verified?<span className="shrink-0 rounded-full bg-[#dff3e4] px-2 py-1 text-[10px] font-bold leading-tight text-[#2d8a4e]">✓ Verified<br/>Brand</span>:null}</header>
-<div className="mt-3 rounded-2xl rounded-ss-md bg-[#e8f6dc] p-3 text-[13px] leading-6">“{parts[0]}{t.bold&&<><b>{t.bold}</b>{parts[1]}</>}” <span className="mt-1 block text-end text-[10px] text-mute">{t.time} ✓✓</span></div>
-{open&&<Img src={t.shot} alt={`Chat screenshot — ${t.name}, ${t.brand}`} width={900} height={1600} loading="lazy" sizes="(min-width:1024px) 30vw,88vw" className="mt-3 h-auto w-full rounded-xl border border-line"/>}
-<footer className="mt-3 flex items-center justify-between gap-2 text-[11px]"><button type="button" aria-expanded={open} onClick={()=>setOpen(!open)} className="text-start text-mute transition hover:text-ink">{open?r.collapse:r.expand}</button><button type="button" onClick={()=>onShot(t)} className="shrink-0 font-bold text-brand">{r.view} ↗</button></footer></article></li>)}
-export default function Reviews(){const d=useRef(null),[s,setS]=useState(null);
-return(<section id="reviews" aria-labelledby="rev-h" className="mx-auto max-w-6xl px-5 py-14 md:py-20"><SecHead id="rev-h" label={r.label} title={r.title} sub={r.sub}/>
-<SnapRow n={r.items.length} hint={r.hint} dotsClass="lg:hidden" className="lg:mx-0 lg:px-0 lg:overflow-visible lg:flex-wrap">{r.items.map((t,i)=><Card key={i} t={t} onShot={x=>{setS(x);d.current?.showModal()}}/>)}</SnapRow>
-<dialog ref={d} onClick={e=>e.target===d.current&&d.current.close()} onClose={()=>setS(null)} className="m-auto max-h-none max-w-none bg-transparent p-0 backdrop:bg-black/85 backdrop:backdrop-blur-sm">{s&&<div className="relative"><Img src={s.shot} alt={`Chat screenshot — ${s.name}, ${s.brand}`} width={1200} height={2000} sizes="92vw" className="h-auto max-h-[88svh] w-auto max-w-[92vw] rounded-2xl object-contain"/><button type="button" onClick={()=>d.current.close()} aria-label="Close" className="absolute -top-3 end-0 grid h-9 w-9 place-items-center rounded-full bg-brand text-white">✕</button></div>}</dialog></section>)}
+import { useState, useRef } from 'react';
+import Img from './ui/Img';
+import SnapRow from './SnapRow';
+import SecHead from './ui/SecHead';
+import { REVIEWS as r } from '@/data/site';
+
+function Card({ t, onShot }) {
+  return (
+    <li className="reveal w-[88%] shrink-0 snap-center sm:w-[46%] lg:w-[calc(33.333%-11px)]">
+      <article className="nb overflow-hidden rounded-3xl bg-white p-2.5">
+        <button
+          type="button"
+          onClick={() => onShot(t)}
+          aria-label={`View screenshot — ${t.name}, ${t.brand}`}
+          className="group relative block w-full overflow-hidden rounded-2xl text-start"
+        >
+          <Img
+            src={t.shot}
+            alt={`Chat screenshot — ${t.name}, ${t.brand}`}
+            width={900}
+            height={1600}
+            loading="lazy"
+            sizes="(min-width:1024px) 30vw,(min-width:768px) 46vw,88vw"
+            className="block h-auto w-full transition duration-500 group-hover:scale-[1.02]"
+          />
+          <span className="pointer-events-none absolute bottom-2.5 end-2.5 rounded-full bg-ink/80 px-3 py-1 text-[11px] font-bold text-white backdrop-blur-sm">
+            {r.view} ↗
+          </span>
+        </button>
+      </article>
+    </li>
+  );
+}
+
+export default function Reviews() {
+  const d = useRef(null);
+  const [s, setS] = useState(null);
+
+  return (
+    <section
+      id="reviews"
+      aria-labelledby="rev-h"
+      className="mx-auto max-w-6xl px-5 py-14 md:py-20"
+    >
+      <SecHead id="rev-h" label={r.label} title={r.title} sub={r.sub} />
+      <SnapRow
+        n={r.items.length}
+        hint={r.hint}
+        dotsClass="lg:hidden"
+        className="lg:mx-0 lg:px-0 lg:overflow-visible lg:flex-wrap"
+      >
+        {r.items.map((t, i) => (
+          <Card
+            key={i}
+            t={t}
+            onShot={(x) => {
+              setS(x);
+              d.current?.showModal();
+            }}
+          />
+        ))}
+      </SnapRow>
+      <dialog
+        ref={d}
+        onClick={(e) => e.target === d.current && d.current.close()}
+        onClose={() => setS(null)}
+        className="m-auto max-h-none max-w-none bg-transparent p-0 backdrop:bg-black/85 backdrop:backdrop-blur-sm"
+      >
+        {s && (
+          <div className="relative">
+            <Img
+              src={s.shot}
+              alt={`Chat screenshot — ${s.name}, ${s.brand}`}
+              width={1200}
+              height={2000}
+              sizes="92vw"
+              className="h-auto max-h-[88svh] w-auto max-w-[92vw] rounded-2xl object-contain"
+            />
+            <button
+              type="button"
+              onClick={() => d.current.close()}
+              aria-label="Close"
+              className="absolute -top-3 end-0 grid h-9 w-9 place-items-center rounded-full bg-brand text-white"
+            >
+              ✕
+            </button>
+          </div>
+        )}
+      </dialog>
+    </section>
+  );
+}

@@ -6,12 +6,12 @@ export const SITE = {
     (process.env.VERCEL_PROJECT_PRODUCTION_URL
       ? "https://" + process.env.VERCEL_PROJECT_PRODUCTION_URL
       : "http://localhost:3000"),
-  whatsapp: "201103239622", 
+  whatsapp: "201103239622",
   instagram: {
     handle: "",
     url: "https://www.instagram.com/esraa.contentcreator?jplx=MWRub25xY3FlaXZybA%3D%3D&utm_source=qr",
   },
-  country: "", 
+  country: "",
   title: "Esraa Yasser | UGC Content Creator, Video Editor & AI Visuals",
   description:
     "Esraa Yasser is a UGC content creator and video editor making scroll-stopping product reviews, lifestyle videos and high-retention edits that turn attention into sales — plus AI-generated video. Ex-marketer at KTAG.",
@@ -97,24 +97,46 @@ export const ABOUT = {
 };
 
 const FOLDERS = [
-  { cat: "Product Reviews", title: "Product Review", tag: "REVIEW", n: 5 },
-  { cat: "Video Editing", title: "Video Edit", tag: "EDIT", n: 7 },
-  { cat: "Lifestyle", title: "Lifestyle Reel", tag: "LIFESTYLE", n: 2 },
+  {
+    cat: "Product Reviews",
+    title: "Product Review",
+    tag: "REVIEW",
+    n: 5,
+    views: ["24K", "15K", "82K", "31K", "18K"],
+  },
+  {
+    cat: "Video Editing",
+    title: "Video Edit",
+    tag: "EDIT",
+    n: 7,
+    views: ["15K", "42K", "88K", "21K", "95K", "14K", "63K"],
+  },
+  {
+    cat: "Lifestyle",
+    title: "Lifestyle Reel",
+    tag: "LIFESTYLE",
+    n: 2,
+    views: ["52K", "30K"],
+  },
 ];
+
 const WORK_ITEMS = [];
-for (let i = 1; i <= Math.max(...FOLDERS.map((f) => f.n)); i++)
-  for (const f of FOLDERS)
+for (let i = 1; i <= Math.max(...FOLDERS.map((f) => f.n)); i++) {
+  for (const f of FOLDERS) {
     if (i <= f.n) {
       const p = `/videos/${f.cat}/${i}`;
+      const rawViews = f.views?.[i - 1] ?? "";
       WORK_ITEMS.push({
         title: `${f.title} ${i}`,
         cat: f.cat,
         tag: f.tag,
-        views: "",
+        views: rawViews ? `${rawViews} views` : "",
         poster: encodeURI(p + ".webp"),
         src: encodeURI(p + ".mp4"),
       });
     }
+  }
+}
 export const WORK = {
   label: "PORTFOLIO",
   title: "Selected Work",
@@ -143,7 +165,7 @@ export const REVIEWS = {
       quote:
         "Hey Esraa! Just reviewed yesterday's ad launch. The UGC video converted at 4.2% CTR, by far our highest this entire quarter! The pacing on the first 3 seconds is gold.",
       bold: "4.2% CTR",
-      shot: "/images/feedback-1.jpg",
+      shot: "/images/IMG-20261123-WA0008.jpg",
     },
     {
       initials: "CN",
@@ -153,7 +175,7 @@ export const REVIEWS = {
       verified: 0,
       quote: "Replace this text with the real message from the client's chat.",
       bold: "",
-      shot: "/images/feedback-2.jpg",
+      shot: "/images/IMG-20261123-WA0009.jpg",
     },
     {
       initials: "CN",
@@ -163,7 +185,7 @@ export const REVIEWS = {
       verified: 0,
       quote: "Replace this text with the real message from the client's chat.",
       bold: "",
-      shot: "/images/feedback-3.jpg",
+      shot: "/images/IMG-20261123-WA0010.jpg",
     },
   ],
 };
