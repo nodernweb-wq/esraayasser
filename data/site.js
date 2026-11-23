@@ -6,12 +6,12 @@ export const SITE = {
     (process.env.VERCEL_PROJECT_PRODUCTION_URL
       ? "https://" + process.env.VERCEL_PROJECT_PRODUCTION_URL
       : "http://localhost:3000"),
-  whatsapp: "201103239622", 
+  whatsapp: "201103239622",
   instagram: {
     handle: "",
     url: "https://www.instagram.com/esraa.contentcreator?jplx=MWRub25xY3FlaXZybA%3D%3D&utm_source=qr",
   },
-  country: "", 
+  country: "",
   title: "Esraa Yasser | UGC Content Creator, Video Editor & AI Visuals",
   description:
     "Esraa Yasser is a UGC content creator and video editor making scroll-stopping product reviews, lifestyle videos and high-retention edits that turn attention into sales — plus AI-generated video. Ex-marketer at KTAG.",
@@ -111,7 +111,7 @@ for (let i = 1; i <= Math.max(...FOLDERS.map((f) => f.n)); i++)
         cat: f.cat,
         tag: f.tag,
         views: "",
-        poster: encodeURI(p + ".webp"),
+        poster: ".webp",
         src: encodeURI(p + ".mp4"),
       });
     }
